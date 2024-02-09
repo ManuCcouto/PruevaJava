@@ -22,3 +22,20 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+# Carpeta de dependencias y archivos generados por Maven
+/target/
+
+# Carpeta de configuración de Maven
+/.mvn/
+
+# Carpeta de configuración de IntelliJ IDEA
+/.idea/
+
+# Archivos generados por el IDE IntelliJ IDEA
+*.iml
+
+# Carpeta de archivos compilados
+/build/
+
+# Archivos de log
+*.log
