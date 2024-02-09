@@ -15,10 +15,6 @@ El proyecto está actualmente en desarrollo.
 - Búsqueda de precios por marca, producto y fecha.
 - Visualización de precios ordenados por prioridad y precio.
 
-## Acceso al Proyecto
-
-Puedes acceder al proyecto en el siguiente enlace: [Proyecto de Gestión de Precios](link_al_proyecto)
-
 ## Tecnologías Utilizadas
 
 - Java
