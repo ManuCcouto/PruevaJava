@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.prueba.java.pruebajava.producto.application.GetPricesUseCaseImplTest
--------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.58 s -- in com.prueba.java.pruebajava.producto.application.GetPricesUseCaseImplTest

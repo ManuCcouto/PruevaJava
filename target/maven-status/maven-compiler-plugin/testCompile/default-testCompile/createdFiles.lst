@@ -1,6 +1,0 @@
-com\prueba\java\pruebajava\producto\infrastructure\Config.class
-com\prueba\java\pruebajava\producto\infrastructure\input\controller\PriceControllerIntegrationTest.class
-com\prueba\java\pruebajava\producto\infrastructure\output\persistence\repository\PriceRepositoryAdapterIntegrationTest.class
-com\prueba\java\pruebajava\producto\infrastructure\input\controller\PriceControllerTest.class
-com\prueba\java\pruebajava\producto\infrastructure\input\controller\exception\ExceptionHandlerControllerTest.class
-com\prueba\java\pruebajava\producto\application\GetPricesUseCaseImplTest.class

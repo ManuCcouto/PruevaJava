@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.prueba.java.pruebajava.producto.infrastructure.input.controller.PriceControllerTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.232 s -- in com.prueba.java.pruebajava.producto.infrastructure.input.controller.PriceControllerTest
