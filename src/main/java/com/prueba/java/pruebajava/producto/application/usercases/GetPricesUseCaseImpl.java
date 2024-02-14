@@ -13,9 +13,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class GetPricesUseCaseImpl implements GetPricesUseCase {
-    @Autowired
     PriceRepository priceRepository;
     private static final Logger logger = LoggerFactory.getLogger(GetPricesUseCaseImpl.class);
+    @Autowired
+    public GetPricesUseCaseImpl(PriceRepository priceRepository) {
+        this.priceRepository = priceRepository;
+    }
 
     @Override
     public PriceDomain getPricesByBrandIdAndProductIdAndDate(Integer brandId, Long productId, LocalDateTime dateTime) {

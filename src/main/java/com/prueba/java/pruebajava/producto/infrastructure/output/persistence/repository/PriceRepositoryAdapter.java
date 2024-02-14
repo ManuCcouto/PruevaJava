@@ -15,11 +15,11 @@ import java.util.Optional;
 public class PriceRepositoryAdapter implements PriceRepository {
     private final SpringDataPriceRepository springDataPriceRepository;
 
-    @Autowired
     private PriceMapper priceMapper;
-
-    public PriceRepositoryAdapter(SpringDataPriceRepository springDataPriceRepository) {
+    @Autowired
+    public PriceRepositoryAdapter(SpringDataPriceRepository springDataPriceRepository, PriceMapper priceMapper) {
         this.springDataPriceRepository = springDataPriceRepository;
+        this.priceMapper = priceMapper;
     }
 
 

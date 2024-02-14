@@ -16,10 +16,14 @@ import java.time.LocalDateTime;
 @RequestMapping("/prueba")
 public class PriceController {
 
-    @Autowired
     private PriceService priceService;
-    @Autowired
+
     private PriceOutMapper priceMapper;
+    @Autowired
+    public PriceController(PriceService priceService, PriceOutMapper priceMapper) {
+        this.priceService = priceService;
+        this.priceMapper = priceMapper;
+    }
 
 
     @GetMapping("/price")

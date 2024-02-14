@@ -110,13 +110,16 @@ class GetPricesUseCaseImplTest {
         ////TEST EN CASO DE QUE LA LOGICA DE BASE DE DATOS FALLE
     @Test
     void testGetPriceListsByBrandIdAndProductIdAndDate_NoPricesFound() {
+        Integer brandId = 1;
+        Long productId = 35455L;
+        LocalDateTime dateTime = LocalDateTime.of(2020, 6, 14, 0, 0, 0);
         // Mockear repositorio para devolver lista vacía
-        when(priceRepository.findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrderList(1, 35455L, LocalDateTime.now()))
+        when(priceRepository.findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrderList(1, 35455L, LocalDateTime.of(2022, 1, 1, 0, 0, 0)))
                 .thenReturn(List.of());
 
         // Verificar que se lanza una NoSuchElementException
         assertThrows(NoSuchElementException.class, () -> {
-            getPricesUseCase.getPriceListsByBrandIdAndProductIdAndDate(1, 35455L, LocalDateTime.now());
+          getPricesUseCase.getPriceListsByBrandIdAndProductIdAndDate(brandId, productId, dateTime);
         });
     }
 
