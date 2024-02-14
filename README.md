@@ -8,7 +8,7 @@ Este proyecto es una aplicación de gestión de precios que permite a los usuari
 
 ## Estado del Proyecto
 
-El proyecto está actualmente en desarrollo.
+El proyecto está actualmente finalizado.
 
 ## Características de la Aplicación y Demostración
 
@@ -63,7 +63,4 @@ GET  'http://localhost:8080/prueba/price?brandId=1&productId=35455&date=2020-06-
 
 Este proyecto está bajo la Licencia MIT. Para más detalles, consulta el archivo [LICENSE](LICENSE).
 
-## Conclusion
-
-Este README proporciona una descripción general del proyecto, sus características, estado actual, tecnologías utilizadas y cómo acceder al proyecto. Además, incluye información sobre los contribuyentes y desarrolladores del proyecto, así como la licencia bajo la cual se distribuye el software.
 

@@ -23,13 +23,13 @@
 hs_err_pid*
 replay_pid*
 # Carpeta de dependencias y archivos generados por Maven
-/target/
+target/
 
 # Carpeta de configuración de Maven
-/.mvn/
+.mvn/
 
 # Carpeta de configuración de IntelliJ IDEA
-/.idea/
+.idea/
 
 # Archivos generados por el IDE IntelliJ IDEA
 *.iml
