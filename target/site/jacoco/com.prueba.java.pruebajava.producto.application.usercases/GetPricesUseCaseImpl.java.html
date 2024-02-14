@@ -3,29 +3,77 @@
 import com.prueba.java.pruebajava.producto.domain.model.PriceDomain;
 import com.prueba.java.pruebajava.producto.domain.ports.in.GetPricesUseCase;
 import com.prueba.java.pruebajava.producto.domain.ports.out.PriceRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-<span class="nc" id="L12">public class GetPricesUseCaseImpl implements GetPricesUseCase {</span>
-    @Autowired
+public class GetPricesUseCaseImpl implements GetPricesUseCase {
     PriceRepository priceRepository;
-
+<span class="fc" id="L17">    private static final Logger logger = LoggerFactory.getLogger(GetPricesUseCaseImpl.class);</span>
+    @Autowired
+<span class="fc" id="L19">    public GetPricesUseCaseImpl(PriceRepository priceRepository) {</span>
+<span class="fc" id="L20">        this.priceRepository = priceRepository;</span>
+<span class="fc" id="L21">    }</span>
 
     @Override
     public PriceDomain getPricesByBrandIdAndProductIdAndDate(Integer brandId, Long productId, LocalDateTime dateTime) {
-<span class="nc" id="L19">        validateParameters(brandId, productId, dateTime);</span>
+<span class="fc" id="L25">        validateParameters(brandId, productId, dateTime);</span>
 
-<span class="nc" id="L21">        return priceRepository.findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrder(</span>
+<span class="fc" id="L27">        return priceRepository.findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrder(</span>
                         brandId, productId, dateTime)
-<span class="nc" id="L23">                .orElseThrow(() -&gt; new NoSuchElementException(&quot;No se encontró ningún precio para la marca, producto y fecha proporcionados&quot;));</span>
+<span class="fc" id="L29">                .orElseThrow(() -&gt; new NoSuchElementException(&quot;No se encontró ningún precio para la marca, producto y fecha proporcionados&quot;));</span>
     }
-    private void validateParameters(Integer brandId, Long productId, LocalDateTime dateTime) {
-<span class="nc bnc" id="L26" title="All 6 branches missed.">        if (brandId == null || productId == null || dateTime == null) {</span>
-<span class="nc" id="L27">            throw new IllegalArgumentException(&quot;Los parámetros no pueden ser nulos&quot;);</span>
+
+    /**
+     * Devuelve la lista de precios para una marca, producto y fecha específicos.
+     * Esta implementación se utiliza como una solución opcional en caso de que la lógica
+     * de la base de datos no cumpla con los criterios acordados. Si se encuentran varios precios
+     * con la misma prioridad, se emite un log de advertencia y se devuelven los precios ordenados
+     * por precio de mayor a menor.
+     *
+     * @param brandId   ID de la marca.
+     * @param productId ID del producto.
+     * @param date      Fecha para la cual se buscan los precios.
+     * @return Lista de precios para la marca, producto y fecha especificados.
+     * @throws NoSuchElementException si no se encuentra ningún precio para la marca, producto y fecha proporcionados.
+     */
+    @Override
+    public List&lt;PriceDomain&gt; getPriceListsByBrandIdAndProductIdAndDate(Integer brandId, Long productId, LocalDateTime date) {
+<span class="fc" id="L47">        List&lt;PriceDomain&gt; prices = priceRepository.findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrderList(brandId, productId, date);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (prices.isEmpty()) {</span>
+<span class="fc" id="L49">            throw new NoSuchElementException(&quot;No se encontró ningún precio para la marca, producto y fecha proporcionados&quot;);</span>
         }
-<span class="nc" id="L29">    }</span>
+        // Ordenar los precios por prioridad de forma descendente
+<span class="fc" id="L52">        prices.sort(Comparator.comparingInt(PriceDomain::getPriority).reversed());</span>
+
+        // Obtener el precio con la prioridad más alta
+<span class="fc" id="L55">        int highestPriority = prices.get(0).getPriority();</span>
+<span class="fc" id="L56">        List&lt;PriceDomain&gt; highestPriorityPrices = prices.stream()</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                .filter(price -&gt; price.getPriority() == highestPriority)</span>
+<span class="fc" id="L58">                .collect(Collectors.toList());</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (highestPriorityPrices.size() &gt; 1) {</span>
+            // Log de alerta indicando que se ha incumplido la lógica de negocio
+<span class="fc" id="L62">            logger.warn(&quot;Se encontraron múltiples precios con la misma prioridad más alta&quot;);</span>
+
+            // Devolver los precios ordenados por precio de mayor a menor
+<span class="fc" id="L65">            highestPriorityPrices.sort(Comparator.comparing(PriceDomain::getPrice).reversed());</span>
+        }
+
+<span class="fc" id="L68">        return highestPriorityPrices;</span>
+
+
+    }
+
+    private void validateParameters(Integer brandId, Long productId, LocalDateTime dateTime) {
+<span class="fc bfc" id="L74" title="All 6 branches covered.">        if (brandId == null || productId == null || dateTime == null) {</span>
+<span class="fc" id="L75">            throw new IllegalArgumentException(&quot;Los parámetros no pueden ser nulos&quot;);</span>
+        }
+<span class="fc" id="L77">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

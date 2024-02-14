@@ -8,25 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class PriceRepositoryAdapter implements PriceRepository {
     private final SpringDataPriceRepository springDataPriceRepository;
 
-    @Autowired
     private PriceMapper priceMapper;
-
-<span class="fc" id="L20">    public PriceRepositoryAdapter(SpringDataPriceRepository springDataPriceRepository) {</span>
+    @Autowired
+<span class="fc" id="L20">    public PriceRepositoryAdapter(SpringDataPriceRepository springDataPriceRepository, PriceMapper priceMapper) {</span>
 <span class="fc" id="L21">        this.springDataPriceRepository = springDataPriceRepository;</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L22">        this.priceMapper = priceMapper;</span>
+<span class="fc" id="L23">    }</span>
 
 
 
     @Override
     public Optional&lt;PriceDomain&gt; findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrder(Integer brandId, Long productId, LocalDateTime adjustedDate) {
-<span class="fc" id="L28">        Optional&lt;Price&gt; optionalPrice = springDataPriceRepository.findPriceByDateAndProductIdAndBrandId(adjustedDate, productId, brandId);</span>
-<span class="fc" id="L29">        return optionalPrice.map(price -&gt; priceMapper.mapToDomain(price));</span>
+<span class="fc" id="L29">        Optional&lt;Price&gt; optionalPrice = springDataPriceRepository.findPriceByDateAndProductIdAndBrandId(adjustedDate, productId, brandId);</span>
+<span class="fc" id="L30">        return optionalPrice.map(price -&gt; priceMapper.mapToDomain(price));</span>
+    }
+
+    @Override
+    public List&lt;PriceDomain&gt; findByBrandIdAndProductIdAndStartDateBeforeAndEndDateAfterOrderList(Integer brandId, Long productId, LocalDateTime adjustedDate) {
+
+<span class="nc" id="L36">       return priceMapper.mapToDomain(springDataPriceRepository.findPriceByDateAndProductIdAndBrandIdList(adjustedDate,productId,brandId));</span>
+
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

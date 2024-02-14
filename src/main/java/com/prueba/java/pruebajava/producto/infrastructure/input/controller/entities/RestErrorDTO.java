@@ -1,6 +1,4 @@
 package com.prueba.java.pruebajava.producto.infrastructure.input.controller.entities;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
